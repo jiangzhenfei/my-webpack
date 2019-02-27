@@ -1,13 +1,14 @@
 let fs = require('fs');
 let path = require('path')
+// ejs主要局势替换模板内的内容
 let ejs = require('ejs')
 
 let entry = path.resolve(__dirname,'../js/index.js');
 let output = path.resolve(__dirname,'../public/main.js')
 let content = fs.readFileSync(entry,'utf8')
 
+// 保存所有依赖的模块的名称和内容
 var modules = []
-console.log(content)
 content = content.replace(/require\(['"](.+?)['"]\)/g,function(){
     let name = path.join(__dirname,'../js',arguments[1])
     let content = fs.readFileSync(name)
@@ -18,6 +19,10 @@ content = content.replace(/require\(['"](.+?)['"]\)/g,function(){
     return `require('${name}');`
 })
 
+// 去掉换行符
+content = content.replace(/[\r\n]+/g,';')
+
+// 最后需要拼成的模板
 let template = `
 (function(modules) {
     function require(moduleId) {
@@ -36,10 +41,10 @@ let template = `
     })
     <%for(let i=0;i<modules.length;i++){
         let module = modules[i];%>,
-        "<%-module.name%>":
-        (function(module, exports, require){
-            eval(\`<%-module.content%>\`);
-        })
+    "<%-module.name%>":
+    (function(module, exports, require){
+        eval(\`<%-module.content%>\`);
+    })
     <%}%>
 });
 `
