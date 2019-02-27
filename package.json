@@ -1,0 +1,22 @@
+{
+  "name": "my-webpack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.conf.js",
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "ejs": "^2.6.1",
+    "webpack": "^4.29.5"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.2.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node_modules/.bin/webpack",
+    "feipack": "node feipack/feipack.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
